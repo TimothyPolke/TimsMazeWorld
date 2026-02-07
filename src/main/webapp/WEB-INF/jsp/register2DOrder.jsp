@@ -46,7 +46,7 @@
 			<f:hidden path="solvedImages"></f:hidden>
 			<f:hidden path="unsolvedImages"></f:hidden>
 			<f:hidden path="fullfilled"></f:hidden>
-			<p><Button id="btnSubmit" type="Submit">Submit</Button> | <a href="../orders2D/">Cancel</a></p>
+			<p><Button id="btnSubmit" type="Submit">Submit</Button> | <Button type="Reset">Reset</Button> | <a href="../orders2D/">Cancel</a></p>
 		</f:form>
 		<script>
 			function disableButton() {

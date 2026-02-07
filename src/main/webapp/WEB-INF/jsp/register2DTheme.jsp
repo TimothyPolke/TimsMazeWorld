@@ -14,7 +14,7 @@
 	</head>
 	<body>
 		<h1>Tim's Theme Registration (2D)</h1>
-		<f:form method="post" action="save" modelAttribute="theme" onsubmit="disableButton()">	
+		<f:form method="post" action="save" modelAttribute="theme" onsubmit="disableButton()" onreset="document.getElementById('customcontrols').style.display = 'none'">
 			<f:hidden path="themeID"></f:hidden>
 			<p>Theme Name:<f:input path="themeAlias" type="text" required="true"></f:input></p>
 			<p>CREATION/EDIT DATE SET AUTOMATICALLY:<f:radiobutton path="themeDate" value="<%=new SimpleDateFormat(\"MM-dd, yyyy @ hh:mm:ss a, zzzz\").format(new java.util.Date())%>" checked="checked" disabled="disabled"></f:radiobutton></p>
@@ -24,7 +24,7 @@
 				<p>Background Color:<f:input path="background" type="color" value="#ffffff" required="true"></f:input></p>
 				<p>Highlight Color:<f:input path="highlight" type="color" value="#ffff00" required="true"></f:input></p>
 			</div>
-			<p><Button id="btnSubmit" type="Submit">Submit</Button> | <a href="..">Cancel</a></p>
+			<p><Button id="btnSubmit" type="Submit">Submit</Button> | <Button type="Reset">Reset</Button> | <a href="..">Cancel</a></p>
 		</f:form>
 		<script>
 			function disableButton() {

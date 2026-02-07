@@ -14,7 +14,7 @@
 	</head>
 	<body>
 		<h1>Tim's Size Registration (3D)</h1>
-		<f:form method="post" action="save" modelAttribute="size" onsubmit="disableButton()">	
+		<f:form method="post" action="save" modelAttribute="size" onsubmit="disableButton()" onreset="document.getElementById('customcontrols').style.display = 'none'">
 			<f:hidden path="sizeID"></f:hidden>
 			<p>Size Name:<f:input path="sizeAlias" type="text" required="true"></f:input></p>
 			<p>CREATION/EDIT DATE SET AUTOMATICALLY:<f:radiobutton path="sizeDate" value="<%=new SimpleDateFormat(\"MM-dd, yyyy @ hh:mm:ss a, zzzz\").format(new java.util.Date())%>" checked="checked" disabled="disabled"></f:radiobutton></p>
@@ -64,7 +64,7 @@
 					</f:select>
 				</p>
 			</div>	
-			<p><Button id="btnSubmit" type="Submit">Submit</Button> | <a href="..">Cancel</a></p>
+			<p><Button id="btnSubmit" type="Submit">Submit</Button> | <Button type="Reset">Reset</Button> | <a href="..">Cancel</a></p>
 		</f:form>
 		<script>
 			function disableButton() {
