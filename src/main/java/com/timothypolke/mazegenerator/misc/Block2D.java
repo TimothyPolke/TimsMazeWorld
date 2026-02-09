@@ -7,14 +7,14 @@ import lombok.Setter;
 public class Block2D {
 	
 	@Getter
-    private int rowID=0;
+	private int rowID=0;
 	@Getter
-    private int columnID=0;
+	private int columnID=0;
 	@Getter
-    private int startX=0;
+	private int startX=0;
 	@Getter
-    private int startY=0;
-
+	private int startY=0;
+	
 	private boolean open=false;
 	
 	public Block2D(int rowID, int columnID, int startX, int startY, boolean open){
@@ -25,7 +25,7 @@ public class Block2D {
 		setOpen(open);
 	}
 
-    public boolean getOpen(){
+	public boolean getOpen(){
 		return open;
 	}
 }

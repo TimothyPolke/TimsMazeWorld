@@ -40,22 +40,20 @@ public class Order3D implements Serializable {
 	
 	@Column(name="orderEmailAddress")
 	private String orderEmailAddress;
-
+	
 	@Column(name="orderQuantity")
 	private int orderQuantity;
-
+	
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "sizeID")
 	private Size3D size;
-
-	@Lob
-	@Column(name = "solvedImages",columnDefinition = "longblob")
-	private ArrayList<String> solvedImages;
-
-	@Lob
-	@Column(name = "unsolvedImages",columnDefinition = "longblob")
-	private ArrayList<String> unsolvedImages;
+	
+	@Column(name = "solvedImages")
+	private String solvedImages;
+	
+	@Column(name = "unsolvedImages")
+	private String unsolvedImages;
 	
 	@Column(name="fullfilled")
 	private boolean fullfilled = false;

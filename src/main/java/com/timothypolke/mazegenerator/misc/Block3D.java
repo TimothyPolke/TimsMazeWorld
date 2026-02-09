@@ -5,20 +5,19 @@ import lombok.Setter;
 
 public class Block3D{
 	@Setter
-    @Getter
-    private int columnID=0;
-	@Setter
-    @Getter
-    private int rowID=0;
-	@Setter
-    @Getter
-    private int layerID=0;
-    @Setter
-    private boolean open=false;
-	
 	@Getter
-    private float[][] points=null;
-
+	private int columnID=0;
+	@Setter
+	@Getter
+	private int rowID=0;
+	@Setter
+	@Getter
+	private int layerID=0;
+	@Setter
+	private boolean open=false;
+	@Getter
+	private float[][] points=null;
+	
 	public Block3D(int columnID, int rowID, int layerID, int startX, int startY, int startZ, int sizeX, int sizeY, int sizeZ, boolean open){
 		setColumnID(columnID);
 		setRowID(rowID);
@@ -31,32 +30,32 @@ public class Block3D{
 		setSizeZ();
 		setOpen(open);
 		
-		createPoints(startX, startY, startZ, sizeX, sizeY, sizeZ);	
+		createPoints(startX, startY, startZ, sizeX, sizeY, sizeZ);
 	}
 
-    public void setStartX(){
-    }
+	public void setStartX(){
+	}
 
 	public void setStartY(){
-    }
+	}
 
 	public void setStartZ(){
-    }
+	}
 
 	public void setSizeX(){
-    }
+	}
 
 	public void setSizeY(){
-    }
+	}
 
 	public void setSizeZ(){
-    }
+	}
 
-    public boolean getOpen(){
+	public boolean getOpen(){
 		return open;
 	}
 
-    public void createPoints(float originX, float originY, float originZ, int xChange, int yChange, int zChange){
+	public void createPoints(float originX, float originY, float originZ, int xChange, int yChange, int zChange){
 		points = new float[8][3];
 		
 		points[0] = new float[]{originX + 0, originY + 0, originZ + 0}; //0,0,0

@@ -9,9 +9,9 @@ import java.util.Base64;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.lang.ClassNotFoundException;
- 
+
 public class Downloader {
-    public byte[] serialize(ArrayList<String> files, String version, String type) {
+	public byte[] serialize(ArrayList<String> files, String version, String type) {
 		ByteArrayOutputStream byteArrayOutputStream = null;
 		ZipOutputStream zipOut = null;
 		ZipEntry zipEntry = null;
@@ -42,5 +42,5 @@ public class Downloader {
 		}
 		
 		return bytes;
-    }
+	}
 }

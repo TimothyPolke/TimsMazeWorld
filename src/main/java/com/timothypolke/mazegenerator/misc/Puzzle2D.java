@@ -24,10 +24,10 @@ public class Puzzle2D extends BufferedImage{
 	private Graphics2D innerGraphics;
 	
 	@Getter
-    private String solved=null;
+	private String solved=null;
 	@Getter
-    private String unsolved=null;
-
+	private String unsolved=null;
+	
 	private Block2D[][] verticalWalls=null;
 	private Block2D[][] horizontalWalls=null;
 	private Block2D[][] cells=null;
@@ -39,7 +39,7 @@ public class Puzzle2D extends BufferedImage{
 
 	public Puzzle2D(int xCells, int yCells, int boundarySize, int cellSize, Color clrForeground, Color clrBackground, Color clrHighlight){
 		super((xCells*cellSize)+((xCells*boundarySize)+boundarySize) + (cellSize*2),(yCells*cellSize)+((yCells*boundarySize)+boundarySize) + (cellSize*2),BufferedImage.TYPE_INT_RGB);
-	
+		
 		this.xCells=xCells;
 		this.yCells=yCells;
 		this.boundarySize=boundarySize;
@@ -63,14 +63,14 @@ public class Puzzle2D extends BufferedImage{
 		solved = Base64.getEncoder().encodeToString(processImage());
 	}
 
-    public void create(){
+	public void create(){
 		verticalWalls=new Block2D[yCells][xCells+1];
 		horizontalWalls=new Block2D[yCells+1][xCells];
 		cells=new Block2D[yCells][xCells];
 		corners=new Block2D[yCells+1][xCells+1];
 		
 		ArrayList<Block2D> visitedCells=new ArrayList<>();
-
+		
 		createVerticalWalls(xCells+1,yCells);
 		createHorizontalWalls(xCells,yCells+1);
 		createCells();
@@ -79,9 +79,9 @@ public class Puzzle2D extends BufferedImage{
 		visitedCells.add(cells[0][0]);
 		while(determinePresenceOfClosedCells()){
 			chooseDirection(visitedCells.get(visitedCells.size()-1).getColumnID(),visitedCells.get(visitedCells.size()-1).getRowID(),visitedCells);
-		}		
+		}
 	}
-	
+
 	public void solve(){
 		ArrayList<Block2D> visitedCells = new ArrayList<>();
 		
@@ -111,7 +111,7 @@ public class Puzzle2D extends BufferedImage{
 			posX = 0;
 		}
 	}
-	
+
 	public void createHorizontalWalls(int xHorizontalWalls,int yHorizontalWalls){
 		int posX = boundarySize;
 		int posY = 0;
@@ -150,14 +150,14 @@ public class Puzzle2D extends BufferedImage{
 			posX = 0;
 		}
 	}
-	
+
 	public void chooseDirection(int posX,int posY,ArrayList<Block2D> visitedCells) {
 		ArrayList<Integer> uncheckedDirections = new ArrayList<>();
 		uncheckedDirections.add(0);
 		uncheckedDirections.add(1);
 		uncheckedDirections.add(2);
 		uncheckedDirections.add(3);
-
+		
 		SecureRandom rand = new SecureRandom();
 		int direction;
 		int xChange = 0;
@@ -167,7 +167,6 @@ public class Puzzle2D extends BufferedImage{
 		boolean type = false;
 		while (!uncheckedDirections.isEmpty()) {
 			direction = uncheckedDirections.get(rand.nextInt(uncheckedDirections.size()));
-
 			if (direction == 0) {
 				xChange = posX;
 				yChange = posY - 1;
@@ -193,7 +192,7 @@ public class Puzzle2D extends BufferedImage{
 				yResult = posY;
 				type = false;
 			}
-
+			
 			try {
 				if (!checkVisitedStatus(cells[yChange][xChange], visitedCells)) {
 					if (!type) {
@@ -210,7 +209,7 @@ public class Puzzle2D extends BufferedImage{
 			}
 		}
 	}
-	
+
 	public boolean determinePresenceOfClosedCells(){
 		boolean present=false;
 		loop:
@@ -224,18 +223,18 @@ public class Puzzle2D extends BufferedImage{
 		}
 		return present;
 	}
-	
+
 	public boolean checkVisitedStatus(Block2D cell, ArrayList<Block2D> visitedCells){
 		boolean result=false;
-        for (Block2D visitedCell : visitedCells) {
-            if (visitedCell.getColumnID() == cell.getColumnID() && visitedCell.getRowID() == cell.getRowID()) {
-                result = true;
-                break;
-            }
-        }
+		for (Block2D visitedCell : visitedCells) {
+			if (visitedCell.getColumnID() == cell.getColumnID() && visitedCell.getRowID() == cell.getRowID()) {
+				result = true;
+				break;
+			}
+		}
 		return result;
 	}
-	
+
 	public boolean forwardMotion(int x1,int y1,int x2,int y2,int direction,ArrayList<Block2D> history){
 		boolean failed=true;
 		try{
@@ -263,18 +262,18 @@ public class Puzzle2D extends BufferedImage{
 		}
 		return failed;
 	}
-	
+
 	public boolean traverseVisited(int y,int x,ArrayList<Block2D> history){
 		boolean found=false;
-        for (Block2D block2D : history) {
-            if (block2D.getColumnID() == x && block2D.getRowID() == y) {
-                found = true;
-                break;
-            }
-        }
+		for (Block2D block2D : history) {
+			if (block2D.getColumnID() == x && block2D.getRowID() == y) {
+				found = true;
+				break;
+			}
+		}
 		return !found;
 	}
-	
+
 	public void highlightCell(Color color,int posX,int posY,int type){
 		innerGraphics.setColor(color);
 		if(type==0){
@@ -290,7 +289,7 @@ public class Puzzle2D extends BufferedImage{
 			innerGraphics.fillRect(corners[posY][posX].getStartX(),corners[posY][posX].getStartY(),boundarySize,boundarySize);
 		}
 	}
-	
+
 	public void redraw(Color foreground,Color background,Color highlight){		
 		for(int iy=0;iy<yCells+1;iy++){
 			for(int ix=0;ix<xCells;ix++){
@@ -319,7 +318,7 @@ public class Puzzle2D extends BufferedImage{
 				highlightCell(foreground,ix,iy,3);
 			}
 		}
-	
+		
 		for(int iy=0;iy<yCells;iy++){
 			for(int ix=0;ix<xCells;ix++){
 				if(route.contains(cells[iy][ix])){
@@ -328,15 +327,15 @@ public class Puzzle2D extends BufferedImage{
 				else{
 					highlightCell(background,ix,iy,2);
 				}
-			}          
+			}
 		}
 		
 		highlightCell(background,0,0,0);
 		highlightCell(background,xCells-1,yCells,0);
 		
 		graphics.drawImage(innerImage, cellSize,  cellSize,  null);
-	}   		
-	
+	}
+
 	public byte[] processImage(){
 		ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
 		byte[] imageInByteArray=null;

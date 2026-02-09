@@ -28,15 +28,15 @@ public class Theme2DService implements ITheme2DService {
 	public void delete(Theme2D theme) {
 		theme2DDAO.delete(theme);
 	}
-	
+
 	@Override
 	public Theme2D read(UUID id) {
 		return theme2DDAO.getReferenceById(id);
 	}	
-	
+
 	@Override
 	public List<Theme2D> readAll() {
 		return theme2DDAO.findAll();
 	}
-	
+
 }

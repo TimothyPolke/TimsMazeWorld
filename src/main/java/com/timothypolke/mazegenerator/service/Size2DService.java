@@ -15,10 +15,9 @@ import com.timothypolke.mazegenerator.entity.Size2D;
 @Service
 @Transactional
 public class Size2DService implements ISize2DService {
-
 	@Autowired
 	Size2DDAO size2DDAO;
-	
+
 	@Override
 	public void createOrUpdate(Size2D size) {
 		size2DDAO.save(size);
@@ -28,15 +27,14 @@ public class Size2DService implements ISize2DService {
 	public void delete(Size2D size) {
 		size2DDAO.delete(size);
 	}
-	
+
 	@Override
 	public Size2D read(UUID id) {
 		return size2DDAO.getReferenceById(id);
 	}	
-	
+
 	@Override
 	public List<Size2D> readAll() {
 		return size2DDAO.findAll();
 	}
-	
 }

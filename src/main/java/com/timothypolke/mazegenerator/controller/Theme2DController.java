@@ -17,7 +17,6 @@ import com.timothypolke.mazegenerator.service.ITheme2DService;
 @Controller
 @RequestMapping("orders2D/themes/")
 public class Theme2DController {
-	
 	@Autowired
 	private ITheme2DService themeService;
 	
@@ -51,5 +50,4 @@ public class Theme2DController {
 		themeService.delete(themeService.read(id));
 		return new ModelAndView("redirect:..");
 	}
-
 }

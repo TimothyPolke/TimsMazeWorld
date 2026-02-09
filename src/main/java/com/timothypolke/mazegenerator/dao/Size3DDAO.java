@@ -9,6 +9,4 @@ import com.timothypolke.mazegenerator.entity.Size3D;
 
 @Repository
 public interface Size3DDAO extends JpaRepository<Size3D, UUID> {
-
-	
 }

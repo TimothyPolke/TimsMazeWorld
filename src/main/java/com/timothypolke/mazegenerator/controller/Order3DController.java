@@ -25,7 +25,6 @@ import com.timothypolke.mazegenerator.service.ISize3DService;
 @Controller
 @RequestMapping("orders3D/")
 public class Order3DController {
-	
 	@Autowired
 	private IOrder3DService orderService;
 	@Autowired
@@ -53,6 +52,12 @@ public class Order3DController {
 		return new ModelAndView("list3DOrders","",model);
 	}
 	
+	@RequestMapping(value="delete/{id}")
+	public ModelAndView delete(@PathVariable("id") UUID id, Model model){
+		orderService.delete(orderService.read(id));
+		return new ModelAndView("redirect:..");
+	}
+	
 	@RequestMapping(value="send/{id}")
 	public ModelAndView send(@PathVariable("id") UUID id, Model model){
 		orderService.deliver(orderService.read(id));
@@ -62,17 +67,16 @@ public class Order3DController {
 	@RequestMapping(value="downloadPuzzles/{id}")
 	public ResponseEntity downloadPuzzles(@PathVariable("id") UUID id, Model model){
 		return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"puzzle3D.zip\"")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(orderService.downloadPuzzles(orderService.read(id)));
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"puzzle3D.zip\"")
+			.contentType(MediaType.APPLICATION_OCTET_STREAM)
+			.body(orderService.downloadPuzzles(orderService.read(id)));
 	}
 	
 	@RequestMapping(value="downloadSolutions/{id}")
 	public ResponseEntity downloadSolutions(@PathVariable("id") UUID id, Model model){
 		return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"solution3D.zip\"")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(orderService.downloadSolutions(orderService.read(id)));
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"solution3D.zip\"")
+			.contentType(MediaType.APPLICATION_OCTET_STREAM)
+			.body(orderService.downloadSolutions(orderService.read(id)));
 	}
-	
 }

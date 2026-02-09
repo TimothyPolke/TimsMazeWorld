@@ -31,16 +31,16 @@ public class Theme2D implements Serializable {
 	
 	@Column(name="themeAlias")
 	private String themeAlias;
-
+	
 	@Column(name="themeDate")
 	private String themeDate;
 	
 	@Column(name="foreground")
 	private String foreground;
-
+	
 	@Column(name="background")
 	private String background;
-
+	
 	@Column(name="highlight")
 	private String highlight;
 }

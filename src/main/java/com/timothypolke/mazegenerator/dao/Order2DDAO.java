@@ -9,6 +9,4 @@ import com.timothypolke.mazegenerator.entity.Order2D;
 
 @Repository
 public interface Order2DDAO extends JpaRepository<Order2D,UUID> {
-
-	
 }

@@ -14,9 +14,9 @@ public class Puzzle3D{
 	private int cellSize;
 	
 	@Getter
-    private String solved=null;
+	private String solved=null;
 	@Getter
-    private String unsolved=null;
+	private String unsolved=null;
 	
 	private Block3D[][][] verticalWalls=null;
 	private Block3D[][][] horizontalWalls=null;
@@ -47,7 +47,7 @@ public class Puzzle3D{
 		solved = redrawSolution();
 	}
 
-    public void create(){
+	public void create(){
 		verticalWalls=new Block3D[zCells][yCells][xCells+1];
 		horizontalWalls=new Block3D[zCells][yCells+1][xCells];
 		flatWalls=new Block3D[zCells+1][yCells][xCells];
@@ -78,8 +78,7 @@ public class Puzzle3D{
 			chooseDirection(visitedCells.get(visitedCells.size()-1).getColumnID(),visitedCells.get(visitedCells.size()-1).getRowID(),visitedCells.get(visitedCells.size()-1).getLayerID(),visitedCells);
 		}	
 	}
-		
-	
+
 	public void solve(){
 		ArrayList<Block3D> visitedCells = new ArrayList<>();
 		
@@ -114,8 +113,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = boundarySize;
 		}
-    }
-	
+	}
+
 	public void createHorizontalWalls(int xHorizontalWalls,int yHorizontalWalls,int zHorizontalWalls){
 		int posX = boundarySize;
 		int posY = 0;
@@ -132,8 +131,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = 0;
 		}
-    }
-	
+	}
+
 	public void createFlatWalls(int xFlatWalls,int yFlatWalls,int zFlatWalls){
 		int posX = boundarySize;
 		int posY = boundarySize;
@@ -150,8 +149,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = boundarySize;
 		}
-    }
-	
+	}
+
 	public void createCells(){
 		int posX = boundarySize;
 		int posY = boundarySize;
@@ -168,8 +167,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = boundarySize;
 		}
-    }
-	
+	}
+
 	public void createVerticalFrames(int xVerticalFrames,int yVerticalFrames,int zVerticalFrames){
 		int posX = boundarySize;
 		int posY = 0;
@@ -186,8 +185,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = 0;
 		}
-    }
-	
+	}
+
 	public void createHorizontalFrames(int xHorizontalFrames,int yHorizontalFrames,int zHorizontalFrames){
 		int posX = 0;
 		int posY = boundarySize;
@@ -204,8 +203,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = boundarySize;
 		}
-    }
-	
+	}
+
 	public void createFlatFrames(int xFlatFrames,int yFlatFrames,int zFlatFrames){
 		int posX = 0;
 		int posY = 0;
@@ -222,8 +221,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = 0;
 		}
-    }
-	
+	}
+
 	public void createCorners(int xCorners,int yCorners,int zCorners){
 		int posX = 0;
 		int posY = 0;
@@ -240,8 +239,8 @@ public class Puzzle3D{
 			posZ = posZ + cellSize + boundarySize;
 			posY = 0;
 		}
-    }
-	
+	}
+
 	public void chooseDirection(int posX,int posY,int posZ,ArrayList<Block3D> visitedCells) {
 		ArrayList<Integer> uncheckedDirections = new ArrayList<>();
 		uncheckedDirections.add(0);
@@ -250,7 +249,7 @@ public class Puzzle3D{
 		uncheckedDirections.add(3);
 		uncheckedDirections.add(4);
 		uncheckedDirections.add(5);
-
+		
 		SecureRandom rand = new SecureRandom();
 		int direction;
 		int xChange = 0;
@@ -262,7 +261,7 @@ public class Puzzle3D{
 		int type = 0;
 		while (!uncheckedDirections.isEmpty()) {
 			direction = uncheckedDirections.get(rand.nextInt(uncheckedDirections.size()));
-
+			
 			if (direction == 0) {
 				xChange = posX - 1;
 				yChange = posY;
@@ -312,7 +311,7 @@ public class Puzzle3D{
 				zResult = posZ + 1;
 				type = 2;
 			}
-
+			
 			try {
 				if (!checkVisitedStatus(cells[zChange][yChange][xChange], visitedCells)) {
 					if (type == 0) {
@@ -349,18 +348,18 @@ public class Puzzle3D{
 		}
 		return present;
 	}
-	
+
 	public boolean checkVisitedStatus(Block3D cell,ArrayList<Block3D> visitedCells){
 		boolean result=false;
-        for (Block3D visitedCell : visitedCells) {
-            if (visitedCell.getColumnID() == cell.getColumnID() && visitedCell.getRowID() == cell.getRowID() && visitedCell.getLayerID() == cell.getLayerID()) {
-                result = true;
-                break;
-            }
-        }
+		for (Block3D visitedCell : visitedCells) {
+			if (visitedCell.getColumnID() == cell.getColumnID() && visitedCell.getRowID() == cell.getRowID() && visitedCell.getLayerID() == cell.getLayerID()) {
+				result = true;
+				break;
+			}
+		}
 		return result;
 	}
-	
+
 	public boolean forwardMotion(int x1,int y1,int z1,int x2,int y2,int z2,int direction,ArrayList<Block3D> history){
 		boolean failed=true;
 		try{
@@ -400,18 +399,18 @@ public class Puzzle3D{
 		}
 		return failed;
 	}
-	
+
 	public boolean traverseVisited(int varX,int varY,int varZ,ArrayList<Block3D> history){
 		boolean found=false;
-        for (Block3D block3D : history) {
-            if (block3D.getColumnID() == varX && block3D.getRowID() == varY && block3D.getLayerID() == varZ) {
-                found = true;
-                break;
-            }
-        }
+		for (Block3D block3D : history) {
+			if (block3D.getColumnID() == varX && block3D.getRowID() == varY && block3D.getLayerID() == varZ) {
+				found = true;
+				break;
+			}
+		}
 		return !found;
 	}
-	
+
 	public String redrawPuzzle(){
 		StringBuilder objData = new StringBuilder();
 		int counter = 0;	
@@ -430,7 +429,7 @@ public class Puzzle3D{
 		float[][][][][] verticalWallsPoints = new float[zCells][yCells][xCells+1][8][3];
 		String[][][][][] verticalWallsFaces = new String[zCells][yCells][xCells+1][6][4];
 		String[][][][] verticalWallsPointsRef = new String[zCells][yCells][xCells+1][8];
-	
+		
 		//flat frame variables
 		float[][][][][] flatFramesPoints = new float[zCells][yCells+1][xCells+1][8][3];
 		String[][][][][] flatFramesFaces = new String[zCells][yCells+1][xCells+1][6][4];
@@ -450,7 +449,7 @@ public class Puzzle3D{
 		float[][][][][] cornersPoints = new float[zCells+1][yCells+1][xCells+1][8][3];
 		String[][][][][] cornersFaces = new String[zCells+1][yCells+1][xCells+1][6][4];
 		String[][][][] cornersPointsRef = new String[zCells+1][yCells+1][xCells+1][8];
-	
+		
 		//flat wall vertices
 		for(int iz=0;iz<zCells+1;iz++){
 			for(int iy=0;iy<yCells;iy++){
@@ -609,7 +608,7 @@ public class Puzzle3D{
 				}
 			}
 		}		
-
+		
 		//vertical frame vertices
 		for(int iz=0;iz<zCells+1;iz++){
 			for(int iy=0;iy<yCells+1;iy++){
@@ -740,34 +739,34 @@ public class Puzzle3D{
 		ArrayList<float[][]> coords = new ArrayList<>();
 		String[] coordsRef = new String[8]; 
 		String[][] faces = new String[6][4];
-        for (Block3D block3D : route) {
-            coords.add(block3D.getPoints());
-            for (int i0 = 0; i0 < 8; i0++) {
-                counter = counter + 1;
-                coordsRef[i0] = String.valueOf(counter);
-                objData.append("v ");
-                for (int i1 = 0; i1 < 3; i1++) {
-                    objData.append(coords.get(coords.size() - 1)[i0][i1]).append(" ");
-                }
-                objData.append("\n");
-            }
-
-            faces[0] = new String[]{coordsRef[0], coordsRef[1], coordsRef[2], coordsRef[3]};
-            faces[1] = new String[]{coordsRef[4], coordsRef[5], coordsRef[6], coordsRef[7]};
-            faces[2] = new String[]{coordsRef[0], coordsRef[1], coordsRef[5], coordsRef[4]};
-            faces[3] = new String[]{coordsRef[2], coordsRef[3], coordsRef[7], coordsRef[6]};
-            faces[4] = new String[]{coordsRef[1], coordsRef[2], coordsRef[6], coordsRef[5]};
-            faces[5] = new String[]{coordsRef[0], coordsRef[3], coordsRef[7], coordsRef[4]};
-
-            for (int i0 = 0; i0 < 6; i0++) {
-                objData.append("f ");
-                for (int i1 = 0; i1 < 4; i1++) {
-                    objData.append(faces[i0][i1]).append(" ");
-                }
-                objData.append("\n");
-            }
-        }
-	
+		for (Block3D block3D : route) {
+			coords.add(block3D.getPoints());
+			for (int i0 = 0; i0 < 8; i0++) {
+				counter = counter + 1;
+				coordsRef[i0] = String.valueOf(counter);
+				objData.append("v ");
+				for (int i1 = 0; i1 < 3; i1++) {
+					objData.append(coords.get(coords.size() - 1)[i0][i1]).append(" ");
+				}
+				objData.append("\n");
+			}
+			
+			faces[0] = new String[]{coordsRef[0], coordsRef[1], coordsRef[2], coordsRef[3]};
+			faces[1] = new String[]{coordsRef[4], coordsRef[5], coordsRef[6], coordsRef[7]};
+			faces[2] = new String[]{coordsRef[0], coordsRef[1], coordsRef[5], coordsRef[4]};
+			faces[3] = new String[]{coordsRef[2], coordsRef[3], coordsRef[7], coordsRef[6]};
+			faces[4] = new String[]{coordsRef[1], coordsRef[2], coordsRef[6], coordsRef[5]};
+			faces[5] = new String[]{coordsRef[0], coordsRef[3], coordsRef[7], coordsRef[4]};
+			
+			for (int i0 = 0; i0 < 6; i0++) {
+				objData.append("f ");
+				for (int i1 = 0; i1 < 4; i1++) {
+					objData.append(faces[i0][i1]).append(" ");
+				}
+				objData.append("\n");
+			}
+		}
+		
 		return objData.toString();
 	}
 }

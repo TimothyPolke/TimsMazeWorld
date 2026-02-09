@@ -25,7 +25,7 @@
 				<th>Size Name</th>
 				<th>Puzzle(s)</th>
 				<th>Solution(s)</th>
-				<th>Deliver</th>
+				<th>Action</th>
 				<th>Completed</th>
 			</tr>
 			<c:forEach var="vorder" items="${listorders}">
@@ -41,7 +41,7 @@
 						<td>${vorder.getSize().getSizeAlias()}</td>	
 						<td><a href="downloadPuzzles/${vorder.getOrderID()}">Download Zip</a></td>
 						<td><a href="downloadSolutions/${vorder.getOrderID()}">Download Zip</a></td>
-						<td><a href="send/${vorder.getOrderID()}">deliver</a></td>
+						<td><a href="send/${vorder.getOrderID()}">SEND</a> | <a href="delete/${vorder.getOrderID()}">DELETE</a></td>
 						<td>${vorder.isFullfilled()}</td>
 					</tr>	
 				</c:catch>

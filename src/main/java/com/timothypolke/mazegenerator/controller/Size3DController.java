@@ -17,7 +17,6 @@ import com.timothypolke.mazegenerator.service.ISize3DService;
 @Controller
 @RequestMapping("orders3D/sizes/")
 public class Size3DController {
-	
 	@Autowired
 	ISize3DService sizeService;
 	
@@ -51,5 +50,4 @@ public class Size3DController {
 		sizeService.delete(sizeService.read(id));
 		return new ModelAndView("redirect:..");
 	}
-
 }

@@ -9,6 +9,4 @@ import com.timothypolke.mazegenerator.entity.Theme2D;
 
 @Repository
 public interface Theme2DDAO extends JpaRepository<Theme2D, UUID> {
-
-	
 }

@@ -15,9 +15,8 @@ import com.timothypolke.mazegenerator.entity.Size3D;
 @Service
 @Transactional
 public class Size3DService implements ISize3DService {
-
 	@Autowired
-    Size3DDAO sizeDAO;
+	Size3DDAO sizeDAO;
 	
 	@Override
 	public void createOrUpdate(Size3D size) {
@@ -38,5 +37,4 @@ public class Size3DService implements ISize3DService {
 	public List<Size3D> readAll() {
 		return sizeDAO.findAll();
 	}
-	
 }
