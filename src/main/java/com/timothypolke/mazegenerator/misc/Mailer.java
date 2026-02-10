@@ -64,8 +64,8 @@ public class Mailer{
 		String [] filenames = new String[datasources.length];
 		filenames[0] = "Puzzles.zip";
 		filenames[1] = "Solutions.zip";
-		datasources[0] = new FileDataSource(puzzleAttachments/*,"application/x-7z-compressed"*/);
-		datasources[1] = new FileDataSource(solutionAttachments/*,"application/x-7z-compressed"*/);
+		datasources[0] = new FileDataSource(puzzleAttachments);
+		datasources[1] = new FileDataSource(solutionAttachments);
 		
 		try {
 			for (String s : to) {

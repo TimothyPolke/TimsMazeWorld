@@ -42,19 +42,24 @@ public class Order2D implements Serializable {
 	@Column(name="orderQuantity")
 	private int orderQuantity;
 	
-	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "sizeID")
-	private Size2D size;
+	@Column(name="columnCount",length=3)
+	private String columnCount;
+	@Column(name="rowCount",length=3)
+	private String rowCount;
+	@Column(name="wallSize",length=2)
+	private String wallSize;
+	@Column(name="cellSize",length=2)
+	private String cellSize;
 	
-	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "themeID")
-	private Theme2D theme;
+	@Column(name="foreground")
+	private String foreground;
+	@Column(name="background")
+	private String background;
+	@Column(name="highlight")
+	private String highlight;
 	
 	@Column(name = "solvedImages")
 	private String solvedImages;
-	
 	@Column(name = "unsolvedImages")
 	private String unsolvedImages;
 	

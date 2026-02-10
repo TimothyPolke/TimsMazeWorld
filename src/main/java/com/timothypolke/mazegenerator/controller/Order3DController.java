@@ -18,23 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.timothypolke.mazegenerator.entity.Order3D;
-import com.timothypolke.mazegenerator.entity.Size3D;
 import com.timothypolke.mazegenerator.service.IOrder3DService;
-import com.timothypolke.mazegenerator.service.ISize3DService;
 
 @Controller
 @RequestMapping("orders3D/")
 public class Order3DController {
 	@Autowired
 	private IOrder3DService orderService;
-	@Autowired
-	private ISize3DService sizeService;
 	
 	@RequestMapping(value="add")
 	public ModelAndView add(){
 		Map<String, Object> mapModel = new HashMap<String, Object>();
-		List<Size3D> sizes = sizeService.readAll();
-		mapModel.put("sizes", sizes);
 		mapModel.put("order", new Order3D());
 		return new ModelAndView("register3DOrder",mapModel);
 	}

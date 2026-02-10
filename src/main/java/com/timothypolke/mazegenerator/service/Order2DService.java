@@ -2,7 +2,9 @@ package com.timothypolke.mazegenerator.service;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.UUID;
@@ -14,28 +16,21 @@ import com.timothypolke.mazegenerator.misc.Mailer;
 
 import jakarta.transaction.Transactional;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.timothypolke.mazegenerator.entity.Order2D;
 import com.timothypolke.mazegenerator.dao.Order2DDAO;
-import com.timothypolke.mazegenerator.entity.Size2D;
-import com.timothypolke.mazegenerator.entity.Theme2D;
 import com.timothypolke.mazegenerator.misc.Puzzle2D;
 import com.timothypolke.mazegenerator.misc.HexToColorConverter;
 
 @Service
 @Transactional
 public class Order2DService implements IOrder2DService {
-	
-	@Autowired
-	Size2DService size2DService;
-	@Autowired
-	Theme2DService themeService;
-	
 	@Autowired
 	Order2DDAO orderDAO;
-
+	
 	@Override
 	public void createOrUpdate(Order2D order) {
 		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties");
@@ -47,19 +42,6 @@ public class Order2DService implements IOrder2DService {
 			e.printStackTrace();
 		}
 		
-		List<Size2D> sizes = size2DService.readAll();
-		for (Size2D size : sizes) {
-			if (size.getSizeID().equals(order.getSize().getSizeID())) {
-				order.setSize(size);
-			}
-		}
-		List<Theme2D> themes = themeService.readAll();
-		for (Theme2D theme : themes) {
-			if (theme.getThemeID().equals(order.getTheme().getThemeID())) {
-				order.setTheme(theme);
-			}
-		}
-		
 		orderDAO.save(order);
 		
 		HexToColorConverter converter = new HexToColorConverter();
@@ -67,7 +49,7 @@ public class Order2DService implements IOrder2DService {
 		ArrayList<String> puzzles2DUnsolved = new ArrayList<>();
 		Puzzle2D puzzle2D;
 		for (int i=0;i<order.getOrderQuantity();i++){
-			puzzle2D = new Puzzle2D(Integer.parseInt(order.getSize().getColumnCount()), Integer.parseInt(order.getSize().getRowCount()), Integer.parseInt(order.getSize().getWallSize()), Integer.parseInt(order.getSize().getCellSize()), converter.hexToColor(order.getTheme().getForeground()), converter.hexToColor(order.getTheme().getBackground()), converter.hexToColor(order.getTheme().getHighlight()));
+			puzzle2D = new Puzzle2D(Integer.parseInt(order.getColumnCount()), Integer.parseInt(order.getRowCount()), Integer.parseInt(order.getWallSize()), Integer.parseInt(order.getCellSize()), converter.hexToColor(order.getForeground()), converter.hexToColor(order.getBackground()), converter.hexToColor(order.getHighlight()));
 			puzzles2DSolved.add(puzzle2D.getSolved());
 			puzzles2DUnsolved.add(puzzle2D.getUnsolved());
 		}
@@ -146,15 +128,27 @@ public class Order2DService implements IOrder2DService {
 	}
 
 	@Override
-	public byte[] downloadPuzzles(Order2D order) {
-		Downloader downloader = new Downloader();
-		return order.getUnsolvedImages().getBytes();
+	public InputStreamResource downloadPuzzles(Order2D order) {
+		InputStreamResource puzzles = null;
+		try{
+			puzzles = new InputStreamResource(new FileInputStream(new File(order.getUnsolvedImages())));
+		}
+		catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		return puzzles;
 	}
 
 	@Override
-	public byte[] downloadSolutions(Order2D order) {
-		Downloader downloader = new Downloader();
-		return order.getSolvedImages().getBytes();
+	public InputStreamResource downloadSolutions(Order2D order) {
+		InputStreamResource solutions = null;
+		try{
+			solutions = new InputStreamResource(new FileInputStream(new File(order.getSolvedImages())));
+		}
+		catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		return solutions;
 	}
 
 	@Override

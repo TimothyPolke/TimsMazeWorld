@@ -18,29 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.timothypolke.mazegenerator.entity.Order2D;
-import com.timothypolke.mazegenerator.entity.Size2D;
-import com.timothypolke.mazegenerator.entity.Theme2D;
 import com.timothypolke.mazegenerator.service.IOrder2DService;
-import com.timothypolke.mazegenerator.service.ISize2DService;
-import com.timothypolke.mazegenerator.service.ITheme2DService;
 
 @Controller
 @RequestMapping("orders2D/")
 public class Order2DController {
 	@Autowired
 	private IOrder2DService orderService;
-	@Autowired
-	private ISize2DService sizeService;
-	@Autowired
-	private ITheme2DService themeService;
 	
 	@RequestMapping(value="add")
 	public ModelAndView add(Model model){
 		Map<String, Object> mapModel = new HashMap<String, Object>();
-		List<Size2D> sizes = sizeService.readAll();
-		List<Theme2D> themes = themeService.readAll();
-		mapModel.put("sizes", sizes);
-		mapModel.put("themes", themes);
 		mapModel.put("order", new Order2D());
 		return new ModelAndView("register2DOrder",mapModel);
 	}
@@ -73,7 +61,7 @@ public class Order2DController {
 	@RequestMapping(value="downloadPuzzles/{id}")
 	public ResponseEntity downloadPuzzles(@PathVariable("id") UUID id, Model model){
 		return ResponseEntity.ok()
-			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"puzzles2D.zip\"")
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"2DPuzzles.zip\"")
 			.contentType(MediaType.APPLICATION_OCTET_STREAM)
 			.body(orderService.downloadPuzzles(orderService.read(id)));
 	}
@@ -81,7 +69,7 @@ public class Order2DController {
 	@RequestMapping(value="downloadSolutions/{id}")
 	public ResponseEntity downloadSolutions(@PathVariable("id") UUID id, Model model){
 		return ResponseEntity.ok()
-			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"solutions2D.zip\"")
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"2DSolutions.zip\"")
 			.contentType(MediaType.APPLICATION_OCTET_STREAM)
 			.body(orderService.downloadSolutions(orderService.read(id)));
 	}

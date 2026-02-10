@@ -44,14 +44,19 @@ public class Order3D implements Serializable {
 	@Column(name="orderQuantity")
 	private int orderQuantity;
 	
-	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "sizeID")
-	private Size3D size;
+	@Column(name="columnCount",length=2)
+	private String columnCount;
+	@Column(name="rowCount",length=2)
+	private String rowCount;
+	@Column(name="layerCount",length=2)
+	private String layerCount;
+	@Column(name="wallSize",length=2)
+	private String wallSize;
+	@Column(name="cellSize",length=2)
+	private String cellSize;
 	
 	@Column(name = "solvedImages")
 	private String solvedImages;
-	
 	@Column(name = "unsolvedImages")
 	private String unsolvedImages;
 	

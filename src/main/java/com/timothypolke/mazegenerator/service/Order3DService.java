@@ -2,7 +2,9 @@ package com.timothypolke.mazegenerator.service;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.UUID;
@@ -14,23 +16,20 @@ import com.timothypolke.mazegenerator.misc.Downloader;
 
 import jakarta.transaction.Transactional;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.timothypolke.mazegenerator.dao.Order3DDAO;
 import com.timothypolke.mazegenerator.entity.Order3D;
-import com.timothypolke.mazegenerator.entity.Size3D;
+import com.timothypolke.mazegenerator.dao.Order3DDAO;
 import com.timothypolke.mazegenerator.misc.Puzzle3D;
 
 @Service
 @Transactional
 public class Order3DService implements IOrder3DService {
 	@Autowired
-	Size3DService sizeService;
-
-	@Autowired
 	Order3DDAO orderDAO;
-
+	
 	@Override
 	public void createOrUpdate(Order3D order) {
 		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties");
@@ -41,21 +40,13 @@ public class Order3DService implements IOrder3DService {
 		catch(IOException e){
 			e.printStackTrace();
 		}
-		
-		List<Size3D> sizes = sizeService.readAll();
-		for (Size3D size : sizes) {
-			if (size.getSizeID().equals(order.getSize().getSizeID())) {
-				order.setSize(size);
-			}
-		}
-		
 		orderDAO.save(order);
 		
 		ArrayList<String> puzzles3DSolved = new ArrayList<>();
 		ArrayList<String> puzzles3DUnsolved = new ArrayList<>();
 		Puzzle3D puzzle3D;
 		for (int i=0;i<order.getOrderQuantity();i++){
-			puzzle3D = new Puzzle3D(Integer.parseInt(order.getSize().getColumnCount()), Integer.parseInt(order.getSize().getRowCount()), Integer.parseInt(order.getSize().getLayerCount()), Integer.parseInt(order.getSize().getWallSize()), Integer.parseInt(order.getSize().getCellSize()));
+			puzzle3D = new Puzzle3D(Integer.parseInt(order.getColumnCount()), Integer.parseInt(order.getRowCount()), Integer.parseInt(order.getLayerCount()), Integer.parseInt(order.getWallSize()), Integer.parseInt(order.getCellSize()));
 			puzzles3DSolved.add(puzzle3D.getSolved());
 			puzzles3DUnsolved.add(puzzle3D.getUnsolved());
 		}
@@ -134,15 +125,27 @@ public class Order3DService implements IOrder3DService {
 	}
 
 	@Override
-	public byte[] downloadPuzzles(Order3D order) {
-		Downloader downloader = new Downloader();
-		return order.getUnsolvedImages().getBytes();
+	public InputStreamResource downloadPuzzles(Order3D order) {
+		InputStreamResource puzzles = null;
+		try{
+			puzzles = new InputStreamResource(new FileInputStream(new File(order.getUnsolvedImages())));
+		}
+		catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		return puzzles;
 	}
 
-	@Override
-	public byte[] downloadSolutions(Order3D order) {
-		Downloader downloader = new Downloader();
-		return order.getSolvedImages().getBytes();
+@Override
+	public InputStreamResource downloadSolutions(Order3D order) {
+		InputStreamResource solutions = null;
+		try{
+			solutions = new InputStreamResource(new FileInputStream(new File(order.getSolvedImages())));
+		}
+		catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		return solutions;
 	}
 
 	@Override

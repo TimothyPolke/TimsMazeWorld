@@ -12,19 +12,22 @@
 	<body>
 		<p><a href="..">Tim's Maze World</a></p>
 		<h1>Tim's 3D Maze Orders</h1>
-		<p><a href="add">Add New Order</a> ~ <a href="sizes/">View Available Sizes</a></p>
+		<p><a href="add">Add New Order</a></p>
 		<table width="50%" border="1" cellspacing="1" cellpadding="10">
 			<tr>
 				<th>Order ID</th>
 				<th>Order Creation/Edit Date</th>
-				<th>Order Email Address</th>			
+				<th>Order Email Address</th>
 				<th>Order Quantity</th>
-				<th>Size ID</th> 
-				<th>Size Name</th>
+				<th>Number of Columns (X AXIS)</th> 
+				<th>Number of Rows (Y AXIS)</th> 
+				<th>Number of Layers (Z AXIS)</th> 
+				<th>Thickness of Walls (PIXELS)</th>
+				<th>Thickness of Cells (PIXELS)</th>
 				<th>Puzzle(s)</th>
 				<th>Solution(s)</th>
 				<th>Action</th>
-				<th>Completed</th>
+				<th>Status</th>
 			</tr>
 			<c:forEach var="vorder" items="${listorders}">
 				<c:catch>
@@ -33,12 +36,20 @@
 						<td>${vorder.getOrderDate()}</td>
 						<td>${vorder.getOrderEmailAddress()}</td>
 						<td>${vorder.getOrderQuantity()}</td>
-						<td>${vorder.getSize().getSizeID()}</td>
-						<td>${vorder.getSize().getSizeAlias()}</td>
+						<td>${vorder.getColumnCount()}</td>
+						<td>${vorder.getRowCount()}</td>
+						<td>${vorder.getLayerCount()}</td>
+						<td>${vorder.getWallSize()}</td>
+						<td>${vorder.getCellSize()}</td>
 						<td><a href="downloadPuzzles/${vorder.getOrderID()}">Download Zip</a></td>
 						<td><a href="downloadSolutions/${vorder.getOrderID()}">Download Zip</a></td>
 						<td><a href="send/${vorder.getOrderID()}">SEND</a> | <a href="delete/${vorder.getOrderID()}">DELETE</a></td>
-						<td>${vorder.isFullfilled()}</td>
+						<td>
+							<c:choose>
+								<c:when test="${vorder.isFullfilled() == true}">DELIVERED</c:when>
+								<c:when test="${vorder.isFullfilled() == false}">NOT DELIVERED</c:when>
+							</c:choose>
+						</td>
 					</tr>	
 				</c:catch>
 			</c:forEach>
