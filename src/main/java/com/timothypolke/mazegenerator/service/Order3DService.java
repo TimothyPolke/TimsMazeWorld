@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.UUID;
@@ -36,7 +35,8 @@ public class Order3DService implements IOrder3DService {
 		Properties properties = new Properties();
 		try{
 			properties.load(inputStream);
-				}
+			inputStream.close();
+		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
@@ -53,7 +53,7 @@ public class Order3DService implements IOrder3DService {
 		
 		Downloader downloader = new Downloader();
 		FileOutputStream  fileOutputStream = null;
-		File orderDirectory = new File(properties.getProperty("3DoutputPath")+"/"+order.getOrderID().toString());
+		File orderDirectory = new File(properties.getProperty("3DOutputPath")+"/"+order.getOrderID().toString());
 		orderDirectory.mkdirs();
 		
 		try {
@@ -97,7 +97,8 @@ public class Order3DService implements IOrder3DService {
 		Properties properties = new Properties();
 		try{
 			properties.load(inputStream);
-				}
+			inputStream.close();
+		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
@@ -127,10 +128,13 @@ public class Order3DService implements IOrder3DService {
 	@Override
 	public InputStreamResource downloadPuzzles(Order3D order) {
 		InputStreamResource puzzles = null;
+		FileInputStream input = null;
 		try{
-			puzzles = new InputStreamResource(new FileInputStream(new File(order.getUnsolvedImages())));
+			input = new FileInputStream(new File(order.getUnsolvedImages()));
+			puzzles = new InputStreamResource(input);
+			input.close();
 		}
-		catch (FileNotFoundException e){
+		catch (IOException e){
 			e.printStackTrace();
 		}
 		return puzzles;
@@ -139,10 +143,13 @@ public class Order3DService implements IOrder3DService {
 @Override
 	public InputStreamResource downloadSolutions(Order3D order) {
 		InputStreamResource solutions = null;
+		FileInputStream input = null;
 		try{
-			solutions = new InputStreamResource(new FileInputStream(new File(order.getSolvedImages())));
+			input = new FileInputStream(new File(order.getSolvedImages()));
+			solutions = new InputStreamResource(input);
+			input.close();
 		}
-		catch (FileNotFoundException e){
+		catch (IOException e){
 			e.printStackTrace();
 		}
 		return solutions;

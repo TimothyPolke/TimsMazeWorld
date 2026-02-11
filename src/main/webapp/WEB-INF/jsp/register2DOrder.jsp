@@ -24,6 +24,8 @@
 				<f:radiobutton path="orderQuantity" name="quantity" value="10" required="true"></f:radiobutton> 10
 				<br/>
 				<f:radiobutton path="orderQuantity" name="quantity" value="100" required="true"></f:radiobutton> 100
+				<br/>
+				<f:radiobutton path="orderQuantity" name="quantity" value="1000" required="true"></f:radiobutton> 1000
 			</p>
 			<p>Sizes: <input type="radio" name="togglesizes" value="defaultsizes" checked="checked" onclick="toggleSizes(this.value)"></input><label for="defaultsize">DEFAULT</label>   <input type="radio" name="togglesizes" value="customsizes" onclick="toggleSizes(this.value)"></input><label for="customsize">CUSTOM</label></p>
 			<div id="customsizecontrols" hidden="true">
