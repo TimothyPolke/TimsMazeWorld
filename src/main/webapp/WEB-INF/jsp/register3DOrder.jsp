@@ -82,7 +82,7 @@
 				if (value == "defaultsizes") {
 					document.getElementById('customsizecontrols').style.display = "none";
 				} 
-				else if (value=="customsizes") {
+				else if (value == "customsizes") {
 					document.getElementById('customsizecontrols').style.display = "block";
 				}
 			}

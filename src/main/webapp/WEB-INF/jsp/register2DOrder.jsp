@@ -81,7 +81,7 @@
 				if (value == "defaultsizes") {
 					document.getElementById('customsizecontrols').style.display = "none";
 				} 
-				else if (value=="customsizes") {
+				else if (value == "customsizes") {
 					document.getElementById('customsizecontrols').style.display = "block";
 				}
 			}
@@ -89,7 +89,7 @@
 				if (value == "defaultcolors") {
 					document.getElementById('customcolorcontrols').style.display = "none";
 				} 
-				else if (value=="customcolors") {
+				else if (value == "customcolors") {
 					document.getElementById('customcolorcontrols').style.display = "block";
 				}
 			}

@@ -47,7 +47,7 @@
 						<td><center><div style="width:50px; height:50px; border:1px solid black; background-color:${vorder.getHighlight()}"></div></center></td>
 						<td><a href="downloadPuzzles/${vorder.getOrderID()}">Download Zip</a></td>
 						<td><a href="downloadSolutions/${vorder.getOrderID()}">Download Zip</a></td>
-						<td><a href="send/${vorder.getOrderID()}">SEND</a> | <a href="delete/${vorder.getOrderID()}">DELETE</a></td>
+						<td><a href="send/${vorder.getOrderID()}" onclick="handleLinkClick(event,${vorder.isFullfilled()})">SEND</a> | <a href="delete/${vorder.getOrderID()}">DELETE</a></td>
 						<td>
 							<c:choose>
 								<c:when test="${vorder.isFullfilled() == true}">DELIVERED</c:when>
@@ -58,5 +58,13 @@
 				</c:catch>
 			</c:forEach>
 		</table>
+		<script>
+			function handleLinkClick(event,order){
+				if (order === true){
+					event.preventDefault();
+					alert("This order has already been delivered!");
+				}
+			}
+		</script>
 	</body>
 </html>
